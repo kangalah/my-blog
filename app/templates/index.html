@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    {% block styles%}
+        {{ super() }}
+            <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    {% endblock %}
+
+
+    {% block content %}
+
+        <div class="container">
+
+            {% if current_user.is_authenticated%}
+                <h1>Hello {{current_user.username}} </h1>
+            {% else %}
+                <h1>Hi there, Welcome to The Epitome</h1>
+                <h2>An open space where you can share your thoughts.</h2>
+                
+            {%endif%}
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="container">
+
+                {% if current_user.id == 1 %}
+
+                    <a class="btn btn-default" href="admin/blog/new"> Create New Blog </a>
+
+                {% else %}
+
+                {% endif %}
+
+
+        </div>
+
+
+        <div class="container">
+
+            <div class="row">
+
+                <ul style:"...">
+                    {{ macro.displayBlogList (blogs) }}
+                </ul>
+
+            </div>
+
+
+
+        </div>
+
+    {% endblock %}
+
+</body>
+
+</html>
