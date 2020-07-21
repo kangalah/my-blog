@@ -1,0 +1,86 @@
+{% extends 'auth/auth-base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {% block styles%}
+        {{ super() }}
+          
+          <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    {% endblock %}
+
+
+{% block content %}
+    
+
+    <!-- <div class="container-fluid" style="background-image: ('{{url_for('static', filename='2.jpg') }}'); background-size:cover;background-repeat: repeat-x; font-family: 'Playfair Display', serif;"> -->
+        <div class="container" style="background-size:cover;background-repeat: repeat-x; font-family: 'Playfair Display', serif;">
+        <div class="row" style="margin-top: 180px;">
+
+            <div class="col-sm-2 col-md-2 col-lg-2"></div>
+
+            <div class="col-sm-5 col-md-5 col-lg-5" style="text-align: center;">
+
+                <h1> The Game Changer! </h1>
+
+        
+
+                <br>
+
+                <p style="font-size: 16px;">
+                  Great minds reason together. 
+                  <br>
+                  Become part of us!
+                </p>
+
+               
+
+            </div>
+
+            <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+            <div class="col-sm-2 col-md-2 col-lg-2">
+
+                <h2> Login </h2>
+
+                <!--flash message -->
+                {% for message in get_flashed_messages() %}
+
+                    <div class="alert alert-danger">
+
+                        <button type="button" class="close" data-dismiss="alert"> &times; </button>
+
+                            {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+                <!-- login form -->
+
+                {{ wtf.quick_form(login_form) }}
+
+                <p> Don't have an account? </p>
+
+                <a class="btn btn-default" href="{{ url_for('auth.register') }}"> Sign Up </a>
+
+            </div>
+
+            <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+        </div>
+
+    </div>
+
+{% endblock%}
+
+
+</body>
+
+</html>
