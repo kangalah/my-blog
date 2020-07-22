@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<br><hr>
+<div class="container-fluid">
+<div style="background-image: url('https://images.pexels.com/photos/39853/woman-girl-freedom-happy-39853.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'); ">
+<h1 class="text-center">RANDOM QUOTE</h1><hr>
+ </div>
+</div>
+    <div class="container">
+        <blockquote class="quote-box text-center primary-color">
+            <p class="quotation-mark">
+              “
+            </p>
+            <p class="quote-text">
+              {{quote.quote}}
+            </p>
+            <hr />
+            <div class="blog-post-actions">
+              <p class="blog-post-bottom pull-left">
+                {{quote.author}}
+              </p>
+            </div>
+          </blockquote>
+ 
+
+{% endblock %}
