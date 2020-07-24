@@ -1,27 +1,46 @@
-{% extends 'index.html' %}
-
-{% block content %}
-<br><hr>
-<div class="container-fluid">
-<div style="background-image: url('https://images.pexels.com/photos/39853/woman-girl-freedom-happy-39853.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'); ">
-<h1 class="text-center">RANDOM QUOTE</h1><hr>
- </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="/static/css/styles.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
+  
+</head>
+<body>
+  
+<link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+<div class="container">
+<div class="card-columns mt-5">
+  <div class="card bg-secondary">
+    <div class="card-body text-center">
+      <p class="card-text">
+      <img src="https://i.pinimg.com/236x/f3/ec/f0/f3ecf00027960b8f79c160af489df3e5.jpg"></p>
+      <p>Love yourself first and everything else falls into line. You really have to love yourself to get anything done in this world.” “The real difficulty is to overcome how you think about yourself.</p>
+    </div>
+  </div>
+  <div class="card bg-white">
+    <div class="card-body text-center">
+      <p class="card-text">
+        <img src="https://i.pinimg.com/originals/71/17/c8/7117c814af7cfc8cdfb0751ff156aa49.jpg"width="240" height="280"></p>
+      <p>If you don't love yourself, you won't be happy with yourself. If you can't love yourself, you can't love anyone else. You can't give the love you do not have. You can't make anyone love you without loving yourself first.</p>
+    </div>
+  </div>
+  <div class="card bg-secondary">
+    <div class="card-body text-center">
+      <p class="card-text">
+      <img src="https://wallpapercave.com/wp/wp5403687.jpg" width="240" height="310"></p>
+      <p>To establish true self-esteem we must concentrate on our successes and forget about the failures and the negatives in our lives.</p>
+    </div>
+  </div>
 </div>
-    <div class="container">
-        <blockquote class="quote-box text-center primary-color">
-            <p class="quotation-mark">
-              “
-            </p>
-            <p class="quote-text">
-              {{quote.quote}}
-            </p>
-            <hr />
-            <div class="blog-post-actions">
-              <p class="blog-post-bottom pull-left">
-                {{quote.author}}
-              </p>
-            </div>
-          </blockquote>
- 
+</div>
 
-{% endblock %}
+
+</body>
+</html>
