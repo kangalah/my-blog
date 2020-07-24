@@ -1,3 +1,10 @@
+/* body {
+    background-color:#00ffff
+    /* background-image: url('../2.jpeg');
+    background-size: cover; */
 body {
-    background-color:rgb(255, 63,153)
+    background-color: rgb(120, 197, 197);
+}
+.blog {
+    background-image: url('../3.jpeg');
 }
