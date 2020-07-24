@@ -1,110 +1,81 @@
-from flask import render_template,request,redirect,url_for,flash,abort
+from flask import render_template, redirect, request, url_for, abort
+from flask_login import login_required, current_user
+
 from . import main
+from ..admin import admin
+from .forms import ReviewForm, BlogForm, EditBlog, DeleteBlog, DeleteComment
+from ..models import Blog, Review, User,Quote
 from .. import db
-from .forms import PostForm, CommentForm, SubscriptionForm
-from ..models import User,Writer,Post,Comment,Subscription
-from flask_login import login_required,current_user
-from app import login_manager
 
-@login_manager.user_loader
-def load_user(user_id):
-    '''
-    @login_manager.user_loader Passes in a writer_id to this function
-    Function queries the database and gets a user's id as a response
-    '''
-    return User.query.get(user_id)
 
-#Views
+
 @main.route('/')
 def index():
-    
-    # if post.validate_on_submit():
-    # title = post.title.data,
-    # body = post.body.data
 
-    posts=Post.query.all()
+    blogs = Blog.get_blog(id)
 
-    # return redirect(url_for('main.index'))
-    return render_template('index.html', posts=posts)
+    return render_template('index.html', blogs=blogs)
 
-@main.route('/post', methods=['GET','POST'])
-# def post():
-#     '''
-#     Post page
-#     '''
-#     post_form = PostForm()
-    
-#     if post_form.validate_on_submit():
-#         title = post_form.title.data
-#         body = post_form.body.data
-#         # time_posted = post_form.time_posted.data
-#         new_post = Post(title=title, body=body)
-#         db.session.add(new_post)
-#         db.session.commit()
-#         return redirect(url_for('main.index'))
-
-#     return render_template('post.html', post_form=post_form)
-
-def new_post():
-    '''
-    New Post Page
-    '''
-    post_form = PostForm()
-
-    if post_form.validate_on_submit():
-        title = post_form.title.data
-        body = post_form.body.data
-
-
-        # updated review instance
-        new_post = Post(title=title,body = body)
-
-        #save review method
-        new_post.save_post()
-        return redirect(url_for('main.index'))
-
-    title = f'{Post.title}'
-    return render_template('post.html',title= title, post_form=post_form)
-
-
-@main.route('/comments/<int:id>', methods=['GET', 'POST'])
+@admin.route('/dashboard')
 @login_required
-def comments(id):
-    comment_form = CommentForm()
-    comment = Comment.query.order_by('-id').all()
 
-    if comment_form.validate_on_submit():
-        comment = comment_form.comment.data()
-        new_comment = Comment(comment=comment,users=current_user.username)
-        new_comment.save_comment()
-        return redirect(url_for('main.comments',id = post.id))
-    return render_template('comments.html')
+def check_user():
 
-@main.route('/delete/<int:id>')
+    if current_user.id != 1:
+        abort(403)
+
+    return render_template('admin/dashboard.html')
+
+
+@main.route('/blog/<int:id>')
+
+def single_blog(id):
+
+    single_blog = Blog.query.get(id)
+
+    reviews = Review.get_reviews(id)
+
+    if single_blog is None:
+        abort (404)
+
+    return render_template('blog.html', blog=single_blog, reviews=reviews)
+
+
+@main.route('/user/<uname>')
+
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
+
+
+@main.route('/blog/review/new/<int:id>', methods=['GET', 'POST'])
 @login_required
-def delete(id):
-    del_comment = Comment.query.get(id)
-    db.session.delete(del_comment)
-    db.session.commit()
-    return redirect(url_for('main.index'))
+def new_review(id):
 
-@main.route('/subscription',methods = ["GET","POST"])
-def subscriber():
+    blog = Blog.query.filter_by(id=id).first()
 
-    form= SubscriptionForm()
+    if blog is None:
+        abort(404)
 
+    form = ReviewForm()
 
     if form.validate_on_submit():
-        email = form.email.data
-        date = form.date.data
 
+        review = form.review.data
 
-        # updated review instance
-        new_subscriber = Subscription(email=email,date = date,user_id=current_user.id)
+        new_review = Review(review=review, user_id=current_user.id, blog_id=blog.id)
 
-        #save review method
-        new_subscriber.save_subscriber()
-        return redirect(url_for('subscriber'))
+        new_review.save_review()
 
+        return redirect(url_for('.single_blog', id=blog.id))
 
-    return render_template('index.html',email= email, subscribe_form=form )
+    return render_template('new_review.html', review_form=form, blog=blog)
+
+@main.route('/quote')
+def quote():
+    
+    return render_template('quote.html')
