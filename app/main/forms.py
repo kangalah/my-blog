@@ -1,27 +1,37 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextAreaField,RadioField,SubmitField,SelectField,ValidationError
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import Required
 
-#Post Form
-class PostForm(FlaskForm):
-    title = StringField('Post Your Blog')
-    body = TextAreaField('Body', validators=[Required()])
-    submit = SubmitField('Submit Post')
 
-#Comment Form
-class CommentForm(FlaskForm):
-    body = TextAreaField('Comment', validators=[Required()])
-    submit = SubmitField()
+class BlogForm(FlaskForm):
 
-#Subscription Form
-class SubscriptionForm(FlaskForm):
-    email = TextAreaField('Email')
-    submit = SubmitField()
+    title = StringField('Blog Title', validators=[Required()])
 
-    def validate_email(self,field):
-        if SubscriptionForm.query.filter_by(email=field.data).first():
-            raise ValidationError('Email exists')
+    description = StringField('Blog Description', validators=[Required()])
 
-class UpdatePost(FlaskForm):
-    body = TextAreaField("Update Post", validators=[Required()])
-    submit = SubmitField('Post')
+    blog = TextAreaField('Blog')
+
+    submit = SubmitField('Submit')
+
+
+class ReviewForm(FlaskForm):
+
+    review = TextAreaField('Blog Review')
+
+    submit = SubmitField('Submit')
+
+
+class EditBlog(FlaskForm):
+
+    submit = SubmitField('Edit Blog')
+
+
+class DeleteBlog(FlaskForm):
+
+    submit = SubmitField('Delete Blog')
+
+
+class DeleteComment(FlaskForm):
+
+    submit = SubmitField('Delete Comment')
